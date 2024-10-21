@@ -1,2 +1,2 @@
 # GesFin.API
-Api para rerenciamento financeiro.
+Api para gerenciamento financeiro.
