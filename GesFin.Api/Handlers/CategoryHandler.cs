@@ -21,7 +21,7 @@ namespace GesFin.Api.Handlers
                     UserId = request.UserId
                 };
                 await context.Categories.AddAsync(category);
-                await context.AddRangeAsync();
+                await context.SaveChangesAsync();
                 return new Response<Category?>(category, 201, "Registro criado com sucesso!");
             }
             catch (System.Exception ex)
@@ -45,6 +45,7 @@ namespace GesFin.Api.Handlers
                     return new Response<Category?>(null, 501, "Registro não encontrado!");
                 }
                 context.Categories.Remove(category);
+                context.SaveChanges();
                 return new Response<Category?>(category);
             }
             catch
