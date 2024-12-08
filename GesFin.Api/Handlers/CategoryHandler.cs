@@ -55,7 +55,7 @@ namespace GesFin.Api.Handlers
 
         }
 
-        public async Task<Response<List<Category>>> GetByAllAsync(GetAllCategoriesRequest request)
+        public async Task<PagedResponse<List<Category>>> GetByAllAsync(GetAllCategoriesRequest request)
         {
             var query = context.Categories
                                .AsNoTracking()
@@ -115,7 +115,7 @@ namespace GesFin.Api.Handlers
             }
             catch
             {
-                return new Response<Category?>(null, 500, "[XT0258] Não pois possivel alterar o registro.");
+                return new Response<Category?>(null, 500, "[XT0258] Não foi possivel alterar o registro.");
             }
         }
     }
