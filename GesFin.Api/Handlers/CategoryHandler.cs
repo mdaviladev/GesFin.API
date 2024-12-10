@@ -1,122 +1,134 @@
+
 using GesFin.Api.Data;
 using GesFin.Core.Handles;
 using GesFin.Core.Models;
 using GesFin.Core.Requests.Categories;
 using GesFin.Core.Responses;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
-namespace GesFin.Api.Handlers
+namespace GesFin.Api.Handlers;
+
+public class CategoryHandler(AppDBContext context) : ICategoryHandler
 {
-    public class CategoryHandler(AppDBContext context) : ICategoryHandler
+    public async Task<Response<Category?>> CreateAsync(CreateCategoryRequest request)
     {
-        public async Task<Response<Category?>> CreateAsync(CreateCategoryRequest request)
+        try
         {
-            try
+            var category = new Category
             {
-                var category = new Category
-                {
-                    Description = request.Description,
-                    Title = request.Title,
-                    UserId = request.UserId
-                };
-                await context.Categories.AddAsync(category);
-                await context.SaveChangesAsync();
-                return new Response<Category?>(category, 201, "Registro criado com sucesso!");
-            }
-            catch (System.Exception ex)
-            {
-                Log.Fatal(ex, "Falha na criação do registro." + ex.Message);
-                return new Response<Category?>(null, 500, "Não foi possível criar o registro");
-            }
+                UserId = request.UserId,
+                Title = request.Title,
+                Description = request.Description
+            };
 
+            await context.Categories.AddAsync(category);
+            await context.SaveChangesAsync();
+
+            return new Response<Category?>(category, 201, "Categoria criada com sucesso!");
         }
-
-        public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
+        catch
         {
-            try
-            {
-                var category = await context
-                           .Categories
-                           .FirstOrDefaultAsync(x => x.Id == request.Id
-                                             && x.UserId == request.UserId);
-                if (category is null)
-                {
-                    return new Response<Category?>(null, 501, "Registro não encontrado!");
-                }
-                context.Categories.Remove(category);
-                context.SaveChanges();
-                return new Response<Category?>(category);
-            }
-            catch
-            {
-                return new Response<Category?>(null, 500, "Não foi possível excluir o registro");
-            }
-
+            return new Response<Category?>(null, 500, "Não foi possível criar a categoria");
         }
+    }
 
-        public async Task<PagedResponse<List<Category>>> GetByAllAsync(GetAllCategoriesRequest request)
+    public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
+    {
+        try
         {
-            var query = context.Categories
-                               .AsNoTracking()
-                               .Where(x => x.UserId == request.UserId)
-                               .OrderBy(x => x.Title);
+            var category = await context
+                .Categories
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+            if (category is null)
+                return new Response<Category?>(null, 404, "Categoria não encontrada");
+
+            category.Title = request.Title;
+            category.Description = request.Description;
+
+            context.Categories.Update(category);
+            await context.SaveChangesAsync();
+
+            return new Response<Category?>(category, message: "Categoria atualizada com sucesso");
+        }
+        catch
+        {
+            return new Response<Category?>(null, 500, "Não foi possível alterar a categoria");
+        }
+    }
+
+    public async Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request)
+    {
+        try
+        {
+            var category = await context
+                .Categories
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+            if (category is null)
+                return new Response<Category?>(null, 404, "Categoria não encontrada");
+
+            context.Categories.Remove(category);
+            await context.SaveChangesAsync();
+
+            return new Response<Category?>(category, message: "Categoria excluída com sucesso!");
+        }
+        catch
+        {
+            return new Response<Category?>(null, 500, "Não foi possível excluir a categoria");
+        }
+    }
+
+    public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
+    {
+        try
+        {
+            var category = await context
+                .Categories
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
+
+            return category is null
+                ? new Response<Category?>(null, 404, "Categoria não encontrada")
+                : new Response<Category?>(category);
+        }
+        catch
+        {
+            return new Response<Category?>(null, 500, "Não foi possível recuperar a categoria");
+        }
+    }
+
+    public async Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoriesRequest request)
+    {
+        try
+        {
+            var query = context
+                .Categories
+                .AsNoTracking()
+                .Where(x => x.UserId == request.UserId)
+                .OrderBy(x => x.Title);
 
             var categories = await query
-                                    .Skip((request.PageNumber - 1) * request.PageSize)
-                                    .Take(request.PageSize)
-                                    .ToListAsync();
+                .Skip((request.PageNumber - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToListAsync();
 
             var count = await query.CountAsync();
 
-            return new PagedResponse<List<Category>>(categories,
-                                                     count,
-                                                     request.PageNumber,
-                                                     request.PageSize);
-
+            return new PagedResponse<List<Category>>(
+                categories,
+                count,
+                request.PageNumber,
+                request.PageSize);
         }
-
-
-        public async Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request)
+        catch
         {
-            try
-            {
-                var category = await context
-                    .Categories
-                    .AsNoTracking()
-                    .FirstOrDefaultAsync(x => x.Id == request.Id && x.UserId == request.UserId);
-
-                return category is null
-                    ? new Response<Category?>(null, 404, "Categoria não encontrada")
-                    : new Response<Category?>(category);
-            }
-            catch
-            {
-                return new Response<Category?>(null, 500, "Não foi possível recuperar o registro");
-            };
+            return new PagedResponse<List<Category>>(null, 500, "Não foi possível consultar as categorias");
         }
+    }
 
-        public async Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request)
-        {
-            try
-            {
-                var category = await context
-                                       .Categories
-                                       .FirstOrDefaultAsync(x => x.Id == request.Id
-                                                          && x.UserId == request.UserId);
-                if (category == null)
-                {
-                    return new Response<Category?>(null, 404, "Registro não encontrado!");
-                }
-                context.Categories.Update(category);
-                await context.SaveChangesAsync();
-
-                return new Response<Category?>(category);
-            }
-            catch
-            {
-                return new Response<Category?>(null, 500, "[XT0258] Não foi possivel alterar o registro.");
-            }
-        }
+    public Task<PagedResponse<List<Category>>> GetByAllAsync(GetAllCategoriesRequest request)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace GesFin.Core
 {
     public static class Configurations
@@ -10,6 +5,11 @@ namespace GesFin.Core
         public const int DefaultPageSize = 25;
         public const int DefaultPageNumber = 1;
         public const int DefaultStatusCode = 200;
+
+        public static string ConnectionString { get; set; } = string.Empty;
+        public static string BackendUrl { get; set; } = string.Empty;
+        public static string FrontendUrl { get; set; } = string.Empty;
+        public static long PremiumPrice { get; set; } = 79990;
 
     }
 }

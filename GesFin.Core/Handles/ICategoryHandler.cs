@@ -10,7 +10,7 @@ namespace GesFin.Core.Handles
         Task<Response<Category?>> UpdateAsync(UpdateCategoryRequest request);
         Task<Response<Category?>> DeleteAsync(DeleteCategoryRequest request);
         Task<Response<Category?>> GetByIdAsync(GetCategoryByIdRequest request);
-        Task<PagedResponse<List<Category>>> GetByAllAsync(GetAllCategoriesRequest request);
+        Task<PagedResponse<List<Category>>> GetAllAsync(GetAllCategoriesRequest request);
 
     }
 }
