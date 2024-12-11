@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GesFin.Api.Handlers;
 
-public class CategoryHandler(AppDBContext context) : ICategoryHandler
+public class CategoryHandler(AppDbContext context) : ICategoryHandler
 {
     public async Task<Response<Category?>> CreateAsync(CreateCategoryRequest request)
     {

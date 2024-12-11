@@ -1,4 +1,5 @@
 using GesFin.Api.Data;
+
 using GesFin.Api.Handlers;
 using GesFin.Core;
 using GesFin.Core.Handles;
@@ -30,6 +31,7 @@ namespace GesFin.Api.Common.Api
         {
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(x => { x.CustomSchemaIds(n => n.FullName); });
+            
         }
 
         public static void AddSecurity(this WebApplicationBuilder builder)
@@ -45,13 +47,13 @@ namespace GesFin.Api.Common.Api
         {
             builder
                 .Services
-                        .AddDbContext<AppDBContext>(
+                        .AddDbContext<AppDbContext>(
                             x => { x.UseSqlServer(Configurations.ConnectionString); });
 
             builder.Services
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole<long>>()
-                .AddRoleStore<AppDBContext>()
+                .AddRoleStore<AppDbContext>()
                 .AddApiEndpoints();
         }
 
