@@ -1,9 +1,8 @@
 using GesFin.Api.Data;
-
 using GesFin.Api.Handlers;
+using GesFin.Api.Models;
 using GesFin.Core;
 using GesFin.Core.Handles;
-using GesFin.Core.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,7 +52,7 @@ namespace GesFin.Api.Common.Api
             builder.Services
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole<long>>()
-                .AddRoleStore<AppDbContext>()
+                .AddEntityFrameworkStores<AppDbContext>()
                 .AddApiEndpoints();
         }
 

@@ -13,7 +13,7 @@ namespace GesFin.Api.Data.Mappings.Identity
     {
         public void Configure(EntityTypeBuilder<IdentityUserRole<long>> builder)
         {
-            builder.ToTable("IdentityUserRole");
+            builder.ToTable("UserRole","Identity");
             builder.HasKey(r => new { r.UserId, r.RoleId });
         }
     }

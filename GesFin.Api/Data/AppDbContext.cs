@@ -19,17 +19,21 @@ public class AppDbContext(DbContextOptions<AppDbContext> options)
         IdentityRoleClaim<long>,
         IdentityUserToken<long>>(options)
 {
+
+    // public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     public DbSet<Category> Categories { get; set; } = null!;
     public DbSet<Transaction> Transactions { get; set; } = null!;
-    public DbSet<Order> Orders { get; set; } = null!;
-
-
     public DbSet<IncomesAndExpenses> IncomesAndExpenses { get; set; } = null!;
     public DbSet<IncomesByCategory> IncomesByCategories { get; set; } = null!;
     public DbSet<ExpensesByCategory> ExpensesByCategories { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        builder.Entity<ExpensesByCategory>().HasNoKey();
+        builder.Entity<IncomesAndExpenses>().HasNoKey();
+        builder.Entity<IncomesByCategory>().HasNoKey();
+
     }
 }
 

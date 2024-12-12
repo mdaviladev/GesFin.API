@@ -13,7 +13,7 @@ namespace GesFin.Api.Data.Mappings.Identity
 {
     public void Configure(EntityTypeBuilder<IdentityRole<long>> builder)
     {
-        builder.ToTable("IdentityRole");
+        builder.ToTable("Role","Identity");
         builder.HasKey(r => r.Id);
         builder.HasIndex(r => r.NormalizedName).IsUnique();
         builder.Property(r => r.ConcurrencyStamp).IsConcurrencyToken();
