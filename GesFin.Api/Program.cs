@@ -5,24 +5,22 @@ using GesFin.Api.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddConfiguration();
-builder.AddSecurity();
 builder.AddDataContexts();
+builder.AddSecurity();
 builder.AddCrossOrigin();
 builder.AddDocumentation();
 builder.AddServices();
 
 var app = builder.Build();
 
-// app.UseSwagger();
+ app.UseSwagger();
 
-// app.UseSwaggerUI(c =>
-//     {
-//         // Endpoints diferentes para diferentes versões
-//         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
-
-//         // Define a rota customizada
-//         c.RoutePrefix = "documentacao";
-//     });
+app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+        c.RoutePrefix = "";
+        c.DocumentTitle = "Minha API Documentação";
+    });
 
 if (app.Environment.IsDevelopment())
     app.ConfigureDevEnvironment();

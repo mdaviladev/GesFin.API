@@ -30,7 +30,7 @@ namespace GesFin.Api.Common.Api
         {
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(x => { x.CustomSchemaIds(n => n.FullName); });
-            
+
         }
 
         public static void AddSecurity(this WebApplicationBuilder builder)
@@ -53,7 +53,12 @@ namespace GesFin.Api.Common.Api
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole<long>>()
                 .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders()
                 .AddApiEndpoints();
+
+            builder.Services.AddScoped<UserManager<User>>();
+            builder.Services.AddScoped<SignInManager<User>>();
+           
         }
 
         public static void AddCrossOrigin(this WebApplicationBuilder builder)
