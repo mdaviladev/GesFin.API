@@ -49,6 +49,8 @@ namespace GesFin.Api.Common.Api
                         .AddDbContext<AppDbContext>(
                             x => { x.UseSqlServer(Configurations.ConnectionString); });
 
+            builder.Services.AddScoped<UserManager<User>>();
+
             builder.Services
                 .AddIdentityCore<User>()
                 .AddRoles<IdentityRole<long>>()
@@ -56,8 +58,6 @@ namespace GesFin.Api.Common.Api
                 .AddDefaultTokenProviders()
                 .AddApiEndpoints();
 
-            builder.Services.AddScoped<UserManager<User>>();
-            builder.Services.AddScoped<SignInManager<User>>();
            
         }
 

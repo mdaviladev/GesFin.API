@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GesFin.Core", "GesFin.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GesFin.Api", "GesFin.Api\GesFin.Api.csproj", "{8B6B2112-9EDD-46B1-8514-4FAF399843C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GesFin.Web", "GesFin.Web\GesFin.Web.csproj", "{1F26D7F6-71D4-4CB9-BBB1-5F6D8FB6E0D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{8B6B2112-9EDD-46B1-8514-4FAF399843C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B6B2112-9EDD-46B1-8514-4FAF399843C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B6B2112-9EDD-46B1-8514-4FAF399843C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F26D7F6-71D4-4CB9-BBB1-5F6D8FB6E0D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F26D7F6-71D4-4CB9-BBB1-5F6D8FB6E0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F26D7F6-71D4-4CB9-BBB1-5F6D8FB6E0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F26D7F6-71D4-4CB9-BBB1-5F6D8FB6E0D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

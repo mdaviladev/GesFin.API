@@ -1,0 +1,33 @@
+@page "/login"
+
+@layout HeadlessLayout
+
+<PageTitle>GesFin - Entrar</PageTitle>
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="12" sm="12" md="8" lg="6" xl="6" xxl="6">
+        <MudPaper Class="mud-width-full pa-6">
+            <div class="d-flex justify-center pb-8 pt-8">
+                <img src="img/flocodeneve.svg" alt="floco" width="120px" />
+            </div>
+
+            <MudForm @ref="_mudForm">
+
+                <MudTextField T="string" Label="email" Required="true" RequiredError="informe o email" />
+                @* Validation="@(new EmailAdressAttribute { ErrorMessage = "E-mail invalido" } )" /> *@
+                <MudTextField T="string" Label="senha" Required="true" RequiredError="Senha Invalida"
+                    InputType="InputType.Password" />
+
+            </MudForm>
+            <div class="d-flex mt-8">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Entrar</MudButton>
+                <MudSpacer />
+                <MudButton Href="/comecar">Registrar</MudButton>
+            </div>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+
+@code {
+    MudForm? _mudForm;
+
+}
