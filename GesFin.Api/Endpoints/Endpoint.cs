@@ -1,5 +1,6 @@
 using GesFin.Api.Common.Api;
 using GesFin.Api.Endpoints.Categories;
+using GesFin.Api.Endpoints.Identity;
 using GesFin.Core.Models.Account;
 
 namespace GesFin.Api.Endpoints
@@ -33,10 +34,10 @@ namespace GesFin.Api.Endpoints
             .WithTags("Identity")
             .MapIdentityApi<User>();
             
-        // endpoints.MapGroup("v1/identity")
-        //     .WithTags("Identity")
-        //     .MapEndpoint<LogoutEndpoint>()
-        //     .MapEndpoint<GetRolesEndpoint>();
+        endpoints.MapGroup("v1/identity")
+            .WithTags("Identity")
+            .MapEndpoint<LogoutEndpoint>()
+            .MapEndpoint<GetRolesEndpoint>();
 
         // endpoints.MapGroup("/v1/reports")
         //     .WithTags("Reports")
