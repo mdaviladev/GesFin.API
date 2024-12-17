@@ -1,7 +1,8 @@
 using GesFin.Api.Common.Api;
 using GesFin.Api.Endpoints.Categories;
 using GesFin.Api.Endpoints.Identity;
-using GesFin.Core.Models.Account;
+using GesFin.Api.Models;
+
 
 namespace GesFin.Api.Endpoints
 {
