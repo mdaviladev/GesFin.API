@@ -58,23 +58,32 @@ namespace GesFin.Api.Common.Api
                 .AddDefaultTokenProviders()
                 .AddApiEndpoints();
 
-           
+
         }
 
         public static void AddCrossOrigin(this WebApplicationBuilder builder)
         {
-            builder.Services.AddCors(
-                options => options.AddPolicy(
-                    ApiConfiguration.CorsPolicyName,
+            // builder.Services.AddCors(
+            //     options => options.AddPolicy(
+            //         ApiConfiguration.CorsPolicyName,
+            //         policy => policy
+            //             .WithOrigins([
+            //                 Configurations.BackendUrl,
+            //                 Configurations.FrontendUrl
+            //             ])
+            //             .AllowAnyMethod()
+            //             .AllowAnyHeader()
+            //             .AllowCredentials()
+            //     ));
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(ApiConfiguration.CorsPolicyName,
                     policy => policy
-                        .WithOrigins([
-                            Configurations.BackendUrl,
-                            Configurations.FrontendUrl
-                        ])
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials()
-                ));
+                    .WithOrigins(Configurations.FrontendUrl)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
         }
 
         public static void AddServices(this WebApplicationBuilder builder)

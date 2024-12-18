@@ -10,7 +10,7 @@ namespace GesFin.Web
     public static class Configuration
     {
         public const string HttpClientName = "GesFin";
-        public static string BackendUrl { get; set; } = "http://localhost:5164";
+        public static string BackendUrl { get; set; } = "http://localhost:5112";
         public static MudTheme Theme = new()
         {
 

@@ -1,10 +1,8 @@
 using GesFin.Api;
 using GesFin.Api.Common.Api;
 using GesFin.Api.Endpoints;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.AddConfiguration();
 builder.AddSecurity();
@@ -19,6 +17,7 @@ if (app.Environment.IsDevelopment())
     app.ConfigureDevEnvironment();
 
 app.UseCors(ApiConfiguration.CorsPolicyName);
+//app.UseCors("CorsPolicy");
 app.UseSecurity();
 app.MapEndpoints();
 
