@@ -4,6 +4,8 @@ using GesFin.Web;
 using MudBlazor.Services;
 using GesFin.Web.Security;
 using Microsoft.AspNetCore.Components.Authorization;
+using GesFin.Core.Handles;
+using GesFin.Web.Handlers;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -25,5 +27,7 @@ builder.Services.AddMudServices();
 builder.Services
     .AddHttpClient(Configuration.HttpClientName, opt => { opt.BaseAddress = new Uri(Configuration.BackendUrl); })
     .AddHttpMessageHandler<CookieHandler>();
+
+builder.Services.AddTransient<IAccountHandler, AccountHandler>();
 
 await builder.Build().RunAsync();
