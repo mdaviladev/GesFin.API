@@ -1,6 +1,6 @@
 @page "/login"
-
 @layout HeadlessLayout
+@inherits LoginPage
 
 <PageTitle>GesFin - Entrar</PageTitle>
 <MudGrid Justify="Justify.Center">
@@ -10,24 +10,40 @@
                 <img src="img/flocodeneve.svg" alt="floco" width="120px" />
             </div>
 
-            <MudForm @ref="_mudForm">
+          <EditForm Model="@InputModel" OnValidSubmit="OnValidSubmitAsync">
+                <DataAnnotationsValidator/>
 
-                <MudTextField T="string" Label="email" Required="true" RequiredError="informe o email" />
-                @* Validation="@(new EmailAdressAttribute { ErrorMessage = "E-mail invalido" } )" /> *@
-                <MudTextField T="string" Label="senha" Required="true" RequiredError="Senha Invalida"
-                    InputType="InputType.Password" />
+                <MudTextField
+                    T="string"
+                    Label="E-mail"
+                    HelperText="Campo obrigatório"
+                    InputType="InputType.Email"
+                    For="@(() => InputModel.Email)"
+                    @bind-Value="InputModel.Email"/>
 
-            </MudForm>
-            <div class="d-flex mt-8">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">Entrar</MudButton>
-                <MudSpacer />
-                <MudButton Href="/comecar">Registrar</MudButton>
-            </div>
+                <MudTextField
+                    T="string"
+                    Label="Senha"
+                    HelperText="Campo obrigatório"
+                    InputType="InputType.Password"
+                    For="@(() => InputModel.Password)"
+                    @bind-Value="InputModel.Password"/>
+
+                <div class="d-flex mt-8">
+                    @if (IsBusy)
+                    {
+                        <MudProgressCircular Color="Color.Info" Indeterminate="true"/>
+                    }
+                    else
+                    {
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">ENTRAR</MudButton>
+                        <MudSpacer/>
+                        <MudButton Href="/comecar">QUERO ME CADASTRAR</MudButton>
+                    }
+                </div>
+
+            </EditForm>
+
         </MudPaper>
     </MudItem>
 </MudGrid>
-
-@code {
-    MudForm? _mudForm;
-
-}

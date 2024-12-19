@@ -75,11 +75,12 @@ namespace GesFin.Api.Common.Api
             //             .AllowAnyHeader()
             //             .AllowCredentials()
             //     ));
+            
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(ApiConfiguration.CorsPolicyName,
-                    policy => policy
-                    .WithOrigins(Configurations.FrontendUrl)
+                    builder => builder
+                    .SetIsOriginAllowed(_ => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
